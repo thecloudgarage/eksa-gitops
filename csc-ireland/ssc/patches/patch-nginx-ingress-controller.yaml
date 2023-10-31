@@ -1,0 +1,4 @@
+- op: add
+  path: /spec
+  value:
+    loadBalancerIP: 10.204.111.61

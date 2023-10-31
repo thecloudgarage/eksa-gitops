@@ -1,0 +1,8 @@
+- op: replace
+  path: /spec/template/spec/containers/1/args/1
+  value:
+    "--volume-name-prefix=wk03-eksa-vol"
+- op: replace
+  path: /spec/template/spec/containers/2/args/3
+  value:
+    "--snapshot-name-prefix=wk03-eksa-snap"

@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../common/csc-sg
+patches:
+  - path: ./patches/patch-deployment.yaml
+    target:
+      kind: Deployment
+  - path: ./patches/patch-daemonset.yaml
+    target:
+      kind: DaemonSet
+  - path: ./patches/patch-nginx-ingress-controller.yaml
+    target:
+      group: core
+      version: v1
+      kind: Service
+      name: ingress-nginx-controller
+      namespace: ingress-nginx
+  - path: ./patches/patch-metallb-config.yaml
+    target:
+      group: metallb.io
+      version: v1beta1
+      kind: IPAddressPool
+      name: first-pool
+      namespace: metallb-system
+  - path: ./patches/patch-csi-powerstore.yaml
+    target:
+      group: core
+      version: v1
+      kind: Deployment
+      name: powerstore-controller
+      namespace: csi-powerstore
+  - path: ./patches/patch-cluster-autoscaler.yaml
+    target:
+      group: core
+      version: v1
+      kind: Deployment
+      name: cluster-autoscaler-management
+      namespace: kube-system
