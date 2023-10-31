@@ -4,7 +4,7 @@ metadata:
  name: workload-cluster-name
 spec:
   registryMirrorConfiguration:
-    endpoint: "harbor-proxycache.oidc.thecloudgarage.com"
+    endpoint: "harbor-proxycache-csc-ireland.oidc.thecloudgarage.com"
     insecureSkipVerify: true
     port: 443
     ociNamespaces:
@@ -27,7 +27,7 @@ spec:
       cidrBlocks:
       - 10.96.0.0/12
   controlPlaneConfiguration:
-    count: 3 #NOTE THAT FOR CONSOLIDATED ETCD CONTROL PLANE NODES HAVE TO BEAR AN ODD COUNT
+    count: 3
     endpoint:
       host: "api-server-ip"
     machineGroupRef:
@@ -40,25 +40,25 @@ spec:
   managementCluster:
     name: management-cluster-name
   workerNodeGroupConfigurations:
-  - count: 2
+  - count: 2 #Creates a worker node pool named md-0 with a static count, ideal for stateful applications
     machineGroupRef:
       kind: VSphereMachineConfig
-      name: workload-cluster-name-wk
+      name: workload-cluster-name-md-0
     name: md-0
     labels:
-     group: md-0
+      group: md-0
+
 ---
 apiVersion: anywhere.eks.amazonaws.com/v1alpha1
 kind: VSphereDatacenterConfig
 metadata:
   name: workload-cluster-name-dcconfig
 spec:
-  datacenter: "IAC-SSC"
+  datacenter: "VxRail-Datacenter"
   insecure: true
-  network: "iac_pg"
-  server: "vc.iac.ssc"
-  thumbprint: "F7:A3:92:55:2D:73:B1:BA:1C:77:A8:AC:A3:AD:F3:62:8A:E0:53:CE"
-  disableCSI: true
+  network: "Production_VLAN102"
+  server: "mc-mg-vcsa.edub.csc"
+  thumbprint: "B0:AE:F4:11:B9:F3:4C:E7:47:02:13:71:96:6D:62:6D:18:EE:F8:A1"
 
 ---
 apiVersion: anywhere.eks.amazonaws.com/v1alpha1
@@ -66,14 +66,14 @@ kind: VSphereMachineConfig
 metadata:
   name: workload-cluster-name-cp
 spec:
-  datastore: "CommonDS"
+  datastore: "VxRail-Virtual-SAN-Datastore-9cda2d8e-54da-466b-8203-cb97974fa0d7"
   diskGiB: 25
-  folder: "test-eks-anywhere"
+  folder: "eks-anywhere"
   memoryMiB: 8192
   numCPUs: 4
   osFamily: ubuntu
   template: "ubuntu-2004-kube-v1.21"
-  resourcePool: "Test"
+  resourcePool: "eksa"
   users:
   - name: capv
     sshAuthorizedKeys:
@@ -83,19 +83,17 @@ spec:
 apiVersion: anywhere.eks.amazonaws.com/v1alpha1
 kind: VSphereMachineConfig
 metadata:
-  name: workload-cluster-name-wk
+  name: workload-cluster-name-md-0
 spec:
-  datastore: "CommonDS"
+  datastore: "VxRail-Virtual-SAN-Datastore-9cda2d8e-54da-466b-8203-cb97974fa0d7"
   diskGiB: 25
-  folder: "test-eks-anywhere"
+  folder: "eks-anywhere"
   memoryMiB: 8192
   numCPUs: 4
   osFamily: ubuntu
   template: "ubuntu-2004-kube-v1.21"
-  resourcePool: "Test"
+  resourcePool: "eksa"
   users:
   - name: capv
     sshAuthorizedKeys:
     - ""
-
----
