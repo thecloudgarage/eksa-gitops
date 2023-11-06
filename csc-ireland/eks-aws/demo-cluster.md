@@ -1,8 +1,11 @@
+CLUSTER_NAME=c4-eks-aws-3
+mkdir -p $CLUSTER_NAME
+cat <<EOF > $CLUSTER_NAME/$CLUSTER_NAME.yaml
 # Please change the name, region, vpc, subnet, instance type and other specs
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: c4-eks-aws-3
+  name: ${CLUSTER_NAME}
   region: eu-west-1
 vpc:
   publicAccessCIDRs: ["0.0.0.0/0"]
@@ -39,4 +42,8 @@ nodeGroups:
       publicKeyName: "nova-keypair-ssh"
     overrideBootstrapCommand: |
       #!/bin/bash
-      /etc/eks/bootstrap.sh c4-eks-aws-3
+      /etc/eks/bootstrap.sh ${CLUSTER_NAME}
+EOF
+eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
+KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
+kubectl get nodes
