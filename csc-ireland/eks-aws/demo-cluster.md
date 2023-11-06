@@ -58,7 +58,7 @@ nodeGroups:
       sudo ./eks-sdc-1.sh
 EOF
 ```
-### Create the EKS Cluster
+### Create the EKS Cluster 
 ```
 eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
