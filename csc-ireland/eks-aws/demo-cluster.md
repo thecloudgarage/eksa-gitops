@@ -1,6 +1,6 @@
 ### Export variables
 ```
-CLUSTER_NAME=c4-eks-aws-3
+CLUSTER_NAME=c4-eks-aws-1
 mkdir -p $CLUSTER_NAME
 ```
 ### Define the EKS Cluster template
@@ -35,12 +35,13 @@ vpc:
         cidr: "172.26.2.128/26"  # (optional, must match CIDR used by the given subnet)
 nodeGroups:
   - name: md-0
-    labels: { group: md-0 }
+    labels:
+      group: md-0
     instanceType: t2.medium
     amiFamily: Ubuntu2004
     ami: ami-062ebd5f10a9d1a90
     privateNetworking: true
-    desiredCapacity: 1
+    desiredCapacity: 2
     securityGroups:
       attachIDs: ["sg-080b7c006220a6283"]
     volumeSize: 50
@@ -50,8 +51,8 @@ nodeGroups:
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
       cd /home/ubuntu
-      wget https://gist.githubusercontent.com/thecloudgarage/e5413d38e95f9f6b90b5628404121d47/raw/74789baca03afcd0ed80d30bb440d53386f5bf1c/eks-sdc-2.sh
-      wget https://gist.githubusercontent.com/thecloudgarage/d5cd40d065b966cf73ea300baf67456d/raw/8e419617c3e4939a115d680f5d1948d095cf6e21/eks-sdc-1.sh
+      wget https://raw.githubusercontent.com/thecloudgarage/eks-anywhere/main/powerflex/eks-sdc-1.sh
+      wget https://raw.githubusercontent.com/thecloudgarage/eks-anywhere/main/powerflex/eks-sdc-2.sh
       chmod +x eks-sdc-1.sh
       chmod +x eks-sdc-2.sh
       sudo ./eks-sdc-1.sh
