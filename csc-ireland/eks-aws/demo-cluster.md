@@ -63,6 +63,10 @@ EOF
 eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 kubectl get nodes
+for n in $(kubectl get nodes --selector='!node-role.kubernetes.io/master'  -o 'jsonpath={.items[*].metadata.name}')
+do
+kubectl label nodes $n group=md-0
+done
 ```
 ### SSH and execute sdc-2 script
 ```
