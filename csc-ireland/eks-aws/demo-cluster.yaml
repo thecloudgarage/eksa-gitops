@@ -24,6 +24,8 @@ vpc:
 nodeGroups:
   - name: md-0
     instanceType: t2.medium
+    amiFamily: Ubuntu2004
+    ami: ami-062ebd5f10a9d1a90
     desiredCapacity: 1
     securityGroups:
       attachIDs: ["sg-080b7c006220a6283"]
