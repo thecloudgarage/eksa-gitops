@@ -63,3 +63,9 @@ eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HO
 KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 kubectl get nodes
 ```
+### SSH and execute sdc-2 script
+cd $CLUSTER_NAME
+ssh -i /home/ubuntu/nova-keypair-ssh.pem ubuntu@node-ip
+sudo su
+sudo ./eks-sdc-2.sh
+/opt/emc/scaleio/sdc/bin/drv_cfg --query_mdms
