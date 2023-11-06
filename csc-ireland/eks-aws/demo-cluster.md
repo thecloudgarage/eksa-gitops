@@ -50,8 +50,8 @@ nodeGroups:
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
       cd /home/ubuntu
-      wget https://gist.githubusercontent.com/thecloudgarage/e5413d38e95f9f6b90b5628404121d47/raw/1603029326ccd8323a5d31b2626408b80b2afd9a/eks-sdc-2.sh
-      wget https://gist.githubusercontent.com/thecloudgarage/d5cd40d065b966cf73ea300baf67456d/raw/91b6bc100721de47da260c66862b8dd1694d2345/eks-sdc-1.sh
+      wget https://gist.githubusercontent.com/thecloudgarage/e5413d38e95f9f6b90b5628404121d47/raw/74789baca03afcd0ed80d30bb440d53386f5bf1c/eks-sdc-2.sh
+      wget https://gist.githubusercontent.com/thecloudgarage/d5cd40d065b966cf73ea300baf67456d/raw/8e419617c3e4939a115d680f5d1948d095cf6e21/eks-sdc-1.sh
       chmod +x eks-sdc-1.sh
       chmod +x eks-sdc-2.sh
       sudo ./eks-sdc-1.sh
