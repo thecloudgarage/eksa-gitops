@@ -35,6 +35,7 @@ vpc:
         cidr: "172.26.2.128/26"  # (optional, must match CIDR used by the given subnet)
 nodeGroups:
   - name: md-0
+    labels: { group: md-0 }
     instanceType: t2.medium
     amiFamily: Ubuntu2004
     ami: ami-062ebd5f10a9d1a90
@@ -48,6 +49,12 @@ nodeGroups:
     overrideBootstrapCommand: |
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
+      cd /home/ubuntu
+      wget https://gist.githubusercontent.com/thecloudgarage/e5413d38e95f9f6b90b5628404121d47/raw/1603029326ccd8323a5d31b2626408b80b2afd9a/eks-sdc-2.sh
+      wget https://gist.githubusercontent.com/thecloudgarage/d5cd40d065b966cf73ea300baf67456d/raw/91b6bc100721de47da260c66862b8dd1694d2345/eks-sdc-1.sh
+      chmod +x eks-sdc-1.sh
+      chmod +x eks-sdc-2.sh
+      sudo ./eks-sdc-1.sh
 EOF
 ```
 ### Create the EKS Cluster
