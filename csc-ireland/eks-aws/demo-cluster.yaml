@@ -37,3 +37,6 @@ nodeGroups:
     volumeSize: 50
     ssh:
       publicKeyName: "nova-keypair-ssh"
+    overrideBootstrapCommand: |
+      #!/bin/bash
+      /etc/eks/bootstrap.sh c4-eks-aws-3
