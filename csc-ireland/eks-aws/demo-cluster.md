@@ -1,5 +1,10 @@
+### Export variables
+```
 CLUSTER_NAME=c4-eks-aws-3
 mkdir -p $CLUSTER_NAME
+```
+### Define the EKS Cluster template
+```
 cat <<EOF > $CLUSTER_NAME/$CLUSTER_NAME.yaml
 # Please change the name, region, vpc, subnet, instance type and other specs
 apiVersion: eksctl.io/v1alpha5
@@ -44,6 +49,10 @@ nodeGroups:
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
 EOF
+```
+### Create the EKS Cluster
+```
 eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
 kubectl get nodes
+```
