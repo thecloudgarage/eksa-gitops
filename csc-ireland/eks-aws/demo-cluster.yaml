@@ -2,7 +2,7 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: ekstest
+  name: c4-eks-aws-1
   region: eu-west-1
 vpc:
   id: "vpc-00bc8b021dafb7a92"  # (optional, must match VPC ID used for each subnet below)
@@ -26,6 +26,7 @@ nodeGroups:
     instanceType: t2.medium
     amiFamily: Ubuntu2004
     ami: ami-062ebd5f10a9d1a90
+    privateNetworking: true
     desiredCapacity: 1
     securityGroups:
       attachIDs: ["sg-080b7c006220a6283"]
