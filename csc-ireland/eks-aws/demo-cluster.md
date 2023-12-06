@@ -86,7 +86,7 @@ done
 ### SSH and execute sdc-2 script
 ```
 cd $CLUSTER_NAME
-ssh -i /home/ubuntu/nova-keypair-ssh.pem ubuntu@node-ip
+ssh -i /home/ubuntu/test.pem ubuntu@node-ip
 sudo su
 sudo ./eks-sdc-2.sh
 /opt/emc/scaleio/sdc/bin/drv_cfg --query_mdms
