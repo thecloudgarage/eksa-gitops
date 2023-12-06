@@ -4,6 +4,14 @@ Before starting ensure that the private subnets are tagged
 Key: kubernetes.io/role/internal-elb
 Value: 1
 ```
+Additionally all services that require an Internal NLB should be configured with the below annotations
+```
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+```
 
 ### Export variables
 ```
