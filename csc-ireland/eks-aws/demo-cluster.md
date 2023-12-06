@@ -1,3 +1,10 @@
+### TAKE NOTE
+Before starting ensure that the private subnets are tagged 
+```
+Key: kubernetes.io/role/internal-elb
+Value: 1
+```
+
 ### Export variables
 ```
 CLUSTER_NAME=c4-eks-aws-1
