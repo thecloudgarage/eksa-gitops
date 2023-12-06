@@ -46,7 +46,7 @@ nodeGroups:
       attachIDs: ["sg-080b7c006220a6283"]
     volumeSize: 50
     ssh:
-      publicKeyName: "nova-keypair-ssh"
+      publicKeyName: "test"
     overrideBootstrapCommand: |
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
