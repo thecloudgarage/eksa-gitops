@@ -66,11 +66,9 @@ nodeGroups:
       #!/bin/bash
       /etc/eks/bootstrap.sh ${CLUSTER_NAME}
       cd /home/ubuntu
-      wget https://raw.githubusercontent.com/thecloudgarage/eks-anywhere/main/powerflex/eks-sdc-1.sh
-      wget https://raw.githubusercontent.com/thecloudgarage/eks-anywhere/main/powerflex/eks-sdc-2.sh
-      chmod +x eks-sdc-1.sh
-      chmod +x eks-sdc-2.sh
-      sudo ./eks-sdc-1.sh
+      wget https://raw.githubusercontent.com/thecloudgarage/eks-anywhere/main/powerflex/eks-sdc-new.sh
+      chmod +x eks-sdc-new.sh
+      sudo ./eks-sdc-new.sh
 EOF
 ```
 ### Create the EKS Cluster 
@@ -86,8 +84,7 @@ done
 ### SSH and execute sdc-2 script
 ```
 cd $CLUSTER_NAME
-ssh -i /home/ubuntu/test.pem ubuntu@node-ip
+ssh -i ubuntu@node-ip
 sudo su
-sudo ./eks-sdc-2.sh
 /opt/emc/scaleio/sdc/bin/drv_cfg --query_mdms
 ```
