@@ -1,6 +1,26 @@
-CLUSTER_NAME=c4-eks-aws-90
-mkdir -p $CLUSTER_NAME
+### TAKE NOTE
+Before starting ensure that the private subnets are tagged 
+```
+Key: kubernetes.io/role/internal-elb
+Value: 1
+```
+Additionally all services that require an Internal NLB should be configured with the below annotations
+```
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+```
 
+### Export variables
+```
+CLUSTER_NAME=c4-eks-aws-1
+mkdir -p $CLUSTER_NAME
+```
+
+### Create Cluster
+```
 # The below command will create the YAML template for the cluster config. 
 # Note the use of backticks., do not remove them
 # This configuration will create an EKS cluster with a custom AMI (ubuntu 20.04 from canonical)
@@ -66,5 +86,22 @@ nodeGroups:
       chmod +x eks-sdc-new.sh
       sudo ./eks-sdc-new.sh
 EOF
+```
 
+### Create the EKS Cluster 
+```
 eksctl create cluster -f $HOME/$CLUSTER_NAME/$CLUSTER_NAME.yaml --kubeconfig=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
+KUBECONFIG=$HOME/$CLUSTER_NAME/$CLUSTER_NAME-eks-cluster.kubeconfig
+kubectl get nodes
+for n in $(kubectl get nodes --selector='!node-role.kubernetes.io/master'  -o 'jsonpath={.items[*].metadata.name}')
+do
+kubectl label nodes $n group=md-0
+done
+```
+### Verification
+```
+cd $CLUSTER_NAME
+ssh -i ubuntu@node-ip
+sudo su
+/opt/emc/scaleio/sdc/bin/drv_cfg --query_mdms
+```
